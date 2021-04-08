@@ -85,8 +85,10 @@ namespace VideoWeb.AcceptanceTests.Steps
         {
             _browsers[_c.CurrentUser].Driver.WaitUntilVisible(JudgeWaitingRoomPage.HearingTitle).Displayed.Should().BeTrue();
             WaitForUserStatusToBe(ParticipantState.Available);
-            _browsers[_c.CurrentUser].Click(JudgeWaitingRoomPage.EnterPrivateConsultationButton);
-            _browsers[_c.CurrentUser].Driver.WaitUntilVisible(PrivateConsultationRoomPage.LeavePrivateConsultationButton).Displayed.Should().BeTrue();
+            Thread.Sleep(1500);   //  Unfortunately necessary as there is a delay between the time that the button becomes clickable and when it actually works.
+            _browsers[_c.CurrentUser].Driver.WaitUntilElementClickable(JudgeWaitingRoomPage.EnterPrivateConsultationButton, 60).Click();
+//            _browsers[_c.CurrentUser].Click(JudgeWaitingRoomPage.EnterPrivateConsultationButton);
+            _browsers[_c.CurrentUser].Driver.WaitUntilElementClickable(PrivateConsultationRoomPage.LeavePrivateConsultationButton, 60).Displayed.Should().BeTrue();
             WaitForUserStatusToBe(ParticipantState.InConsultation);
         }
 
@@ -96,7 +98,7 @@ namespace VideoWeb.AcceptanceTests.Steps
             _browserSteps.GivenInTheUsersBrowser(user);
             _browsers[_c.CurrentUser].Click(PrivateConsultationRoomPage.LeavePrivateConsultationButton);
             _browsers[_c.CurrentUser].Driver.WaitUntilVisible(PrivateConsultationRoomPage.ConfirmLeavePrivateConsultationButton).Click();
-            _browsers[_c.CurrentUser].Driver.WaitUntilVisible(JudgeWaitingRoomPage.HearingTitle).Displayed.Should().BeTrue();
+            _browsers[_c.CurrentUser].Driver.WaitUntilVisible(JudgeWaitingRoomPage.HearingTitle, 50).Displayed.Should().BeTrue();
         }
         
         [When(@"(?:he|she|they) (?:mute|mutes|unmute) their microphone")]

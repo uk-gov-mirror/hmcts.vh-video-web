@@ -343,3 +343,5 @@ TESTS.xml
 *.DS_Store
 *.orig
 .angulardoc.json
+/VideoWeb/VideoWeb.AcceptanceTests/Pickles
+/VideoWeb/VideoWeb/Enter
